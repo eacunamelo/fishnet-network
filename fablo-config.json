@@ -1,0 +1,67 @@
+{
+  "$schema": "https://github.com/softwaremill/fablo/releases/download/1.0.0/schema.json",
+  "global": {
+    "fabricVersion": "2.3.0",
+    "tls": false
+  },
+  "orgs": [
+    {
+      "organization": {
+        "name": "orderer",
+        "domain": "orderer.fishnet.com"
+      },
+      "orderers": [
+        {
+          "groupName": "group1",
+          "type": "solo",
+          "instances": 1
+        }
+      ]
+    },
+    {
+      "organization": {
+        "name": "fishers",
+        "domain": "fishers.fishnet.com"
+      },
+      "peer": {
+        "instances": 1,
+        "db": "CouchDb"
+      },
+      "tools": {
+        "fabloRest": true
+      }
+    }
+  ],
+  "channels": [
+    {
+      "name": "traceability",
+      "orgs": [
+        {
+          "name": "fishers",
+          "peers": [
+            "peer0"
+          ]
+        }
+      ]
+    }
+  ],
+  "chaincodes": [
+    {
+      "name": "lot",
+      "version": "0.0.1",
+      "lang": "node",
+      "channel": "traceability",
+      "directory": "./chaincodes/chaincode-lot"
+    },
+    {
+      "name": "fish",
+      "version": "0.0.1",
+      "lang": "node",
+      "channel": "traceability",
+      "directory": "./chaincodes/chaincode-fish"
+    }
+  ],
+  "hooks": {
+    "postGenerate": "chmod 777 ./config.sh \n ./config.sh"
+  }
+}

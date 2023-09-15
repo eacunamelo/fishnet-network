@@ -1,0 +1,5 @@
+.DS_Store
+/ipfs/data
+/fablo-target
+/chaincodes/chaincode-fish/node_modules
+/chaincodes/chaincode-lot/node_modules

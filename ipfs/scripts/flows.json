@@ -1,0 +1,497 @@
+[
+    {
+        "id": "f24933dbb5281975",
+        "type": "tab",
+        "label": "WS",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c3315da4cc1afaa1",
+        "type": "debug",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "09311400836b1968",
+        "type": "websocket out",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "server": "b6525f047045ab20",
+        "client": "",
+        "x": 700,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "738510e06f52cce2",
+        "type": "websocket in",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "server": "b6525f047045ab20",
+        "client": "",
+        "x": 180,
+        "y": 620,
+        "wires": [
+            [
+                "1577a4c1b0d1f840"
+            ]
+        ]
+    },
+    {
+        "id": "3ed74731a9dfc6a2",
+        "type": "inject",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"type\":\"TEMPERATURE\",\"timestamp\":\"2021-12-15 08:00:00\",\"latitude\":-16.4086517,\"longitude\":-71.5435629,\"hold1\":1.2,\"load1\":0.8,\"hold2\":2.2,\"load2\":1.2,\"hold3\":-99,\"load3\":-99}",
+        "payloadType": "json",
+        "x": 170,
+        "y": 280,
+        "wires": [
+            [
+                "96d7eeaa023418b1"
+            ]
+        ]
+    },
+    {
+        "id": "96d7eeaa023418b1",
+        "type": "switch",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "property": "payload.type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "TEMPERATURE",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 370,
+        "y": 320,
+        "wires": [
+            [
+                "09311400836b1968",
+                "a7fc200c48edaa2e",
+                "7cd9c2d7f645b5c1"
+            ]
+        ]
+    },
+    {
+        "id": "371ef48caa1413ec",
+        "type": "inject",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"type\":\"GEOLOCATION\",\"timestamp\":\"2021-12-15 08:00:00\",\"latitude\":-16.4086517,\"longitude\":-71.5435629,\"satellites\":4,\"accuracy\":\"Buena\"}",
+        "payloadType": "json",
+        "x": 170,
+        "y": 420,
+        "wires": [
+            [
+                "481619ddd9fbbfda"
+            ]
+        ]
+    },
+    {
+        "id": "481619ddd9fbbfda",
+        "type": "switch",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "property": "payload.type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "GEOLOCATION",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 370,
+        "y": 440,
+        "wires": [
+            [
+                "09311400836b1968",
+                "a7fc200c48edaa2e",
+                "da1f39c0751649ee"
+            ]
+        ]
+    },
+    {
+        "id": "fe3bf357ab0452ea",
+        "type": "switch",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "property": "payload.type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "SEND_BLOCKCHAIN",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 530,
+        "y": 620,
+        "wires": [
+            [
+                "c3315da4cc1afaa1",
+                "729f1088bbe0ee3f"
+            ]
+        ]
+    },
+    {
+        "id": "5b0783e1cbee57b5",
+        "type": "bigexec",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "command": "sh ~/node-red/scripts/load-ipfs.sh",
+        "commandArgs": "",
+        "minError": 1,
+        "minWarning": 1,
+        "cwd": "",
+        "shell": true,
+        "extraArgumentProperty": "",
+        "envProperty": "",
+        "format": "utf8",
+        "limiter": true,
+        "payloadIs": "argumentNoStdin",
+        "x": 800,
+        "y": 740,
+        "wires": [
+            [
+                "c3315da4cc1afaa1",
+                "481c184f369fd4e5"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a7fc200c48edaa2e",
+        "type": "debug",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "1577a4c1b0d1f840",
+        "type": "json",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 350,
+        "y": 620,
+        "wires": [
+            [
+                "fe3bf357ab0452ea"
+            ]
+        ]
+    },
+    {
+        "id": "1b9ac498d14ab03a",
+        "type": "inject",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"type\":\"GEOLOCATION\",\"timestamp\":\"2021-12-15 08:00:00\",\"latitude\":-99,\"longitude\":-99,\"satellites\":-99,\"accuracy\":\"Buena\"}",
+        "payloadType": "json",
+        "x": 170,
+        "y": 480,
+        "wires": [
+            [
+                "481619ddd9fbbfda"
+            ]
+        ]
+    },
+    {
+        "id": "7053e3c8fcdd2460",
+        "type": "inject",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"type\":\"TEMPERATURE\",\"timestamp\":\"2021-12-15 08:00:00\",\"latitude\":-71,\"longitude\":-45,\"hold1\":1,\"load1\":1.1,\"hold2\":-99,\"load2\":-99,\"hold3\":-99,\"load3\":-99}",
+        "payloadType": "json",
+        "x": 170,
+        "y": 340,
+        "wires": [
+            [
+                "96d7eeaa023418b1"
+            ]
+        ]
+    },
+    {
+        "id": "7cd9c2d7f645b5c1",
+        "type": "csv",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "sep": ";",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "timestamp, latitude, longitude, hold1, load1, hold2, load2, hold3, load3",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": true,
+        "include_null_values": true,
+        "x": 630,
+        "y": 180,
+        "wires": [
+            [
+                "abf13d90082fdfb6",
+                "52f76a52565da4cf"
+            ]
+        ]
+    },
+    {
+        "id": "abf13d90082fdfb6",
+        "type": "debug",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 890,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "52f76a52565da4cf",
+        "type": "file",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "filename": "temperature",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "utf8",
+        "x": 890,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "da1f39c0751649ee",
+        "type": "csv",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "sep": ";",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "timestamp, latitude, longitude, satellites, accuracy",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": true,
+        "include_null_values": true,
+        "x": 630,
+        "y": 300,
+        "wires": [
+            [
+                "abf13d90082fdfb6",
+                "9c2277438f2d4a80"
+            ]
+        ]
+    },
+    {
+        "id": "9c2277438f2d4a80",
+        "type": "file",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "filename": "geolocation",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "utf8",
+        "x": 890,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "729f1088bbe0ee3f",
+        "type": "template",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "\"{{{payload.apiProfile.token}}}\" \"{{{payload.apiProfile.port}}}\"",
+        "output": "str",
+        "x": 620,
+        "y": 740,
+        "wires": [
+            [
+                "5b0783e1cbee57b5"
+            ]
+        ]
+    },
+    {
+        "id": "1e4aeeedb1598a07",
+        "type": "websocket out",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "server": "78f159ad0083eb1c",
+        "client": "",
+        "x": 1240,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "481c184f369fd4e5",
+        "type": "function",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "func": "return {payload: msg.payload};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "\n",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 840,
+        "wires": [
+            [
+                "42b3c688b15e87b4",
+                "1e4aeeedb1598a07"
+            ]
+        ]
+    },
+    {
+        "id": "42b3c688b15e87b4",
+        "type": "debug",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1230,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "4d29cd7fa002a2fa",
+        "type": "switch",
+        "z": "f24933dbb5281975",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "INFO",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "ERROR",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 970,
+        "y": 900,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "b6525f047045ab20",
+        "type": "websocket-listener",
+        "path": "/ws/socket",
+        "wholemsg": "false"
+    },
+    {
+        "id": "78f159ad0083eb1c",
+        "type": "websocket-listener",
+        "path": "/ws/socketPublish",
+        "wholemsg": "false"
+    }
+]
